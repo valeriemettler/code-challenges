@@ -29,10 +29,14 @@ class Solutions():
     def __init__(self):
         pass
 
+    ###############################
+    # Function: greater_than_avg
+    ###############################
     def greater_than_avg( self, _list):
 
         rlist = []
-        
+
+        # Input must be a list
         if( not isinstance( _list, list)):
             return rlist
     
@@ -40,6 +44,8 @@ class Solutions():
         total = 0
         valid_count = 0
         for x in _list:
+
+            # Element must be an Integer
             if( isinstance( x, int)):
                 total += x
                 valid_count = valid_count+1
@@ -47,19 +53,25 @@ class Solutions():
         avg = total / valid_count
         
         for x in _list:
+
+            # Element must be an Integer
             if( isinstance( x, int)):
                 if x > avg:
                     rlist.append(x)
         
         return rlist
 
+    ###############################
+    # Function: sort_fruit
+    ###############################
     def sort_fruit( self, _fruits):
 
         DICT_TAG_FRUIT_NAME = 'word'
         DICT_TAG_FRUIT_COUNT = 'count'
 
         rvalue = []
-        
+
+        # Input must be a list
         if( not isinstance( _fruits, list)):
             return rvalue        
 
@@ -85,10 +97,14 @@ class Solutions():
 
         return rvalue
 
+    ###############################
+    # Function: transpose_dict
+    ###############################
     def transpose_dict( self, _in):
     
         rvalue = dict()
-        
+
+        # Input must be a dict
         if( not isinstance( _in, dict)):
             return rvalue
         
@@ -96,23 +112,132 @@ class Solutions():
             rvalue[v] = k
         
         return rvalue
-    
+
+    ###############################
+    # Function: week_start_end
+    ###############################
     def week_start_end( self, _in):
     
-        rval_start = datetime()
-        rval_end = datetime()
-        
+        rval_start = None
+        rval_end = None
+
+        # Element must be an datetime
         if( not isinstance( _in, datetime())):
-            return rvalue
+            return None
         
         return (rval_start, rval_end)
-    
+
+    ###############################
+    # Function: test_month_last_day
+    ###############################
+    def test_month_last_day( self, _in):
+        rvalue = datetime()
+
+        # Element must be an datetime
+        if( not isinstance( _in, datetime())):
+            return rvalue
+
+        return rvalue
+
+    ###############################
+    # Function: palindrome_test_function
+    ###############################
+    def palindrome_test_function( self):
+        return is_palindrome
+
+    ###############################
+    # Function: string_parse
+    ###############################
+    def string_parse( self, _in):
+
+        rvalue = []
+
+        # Element must be an string
+        if( not isinstance( _in, str)):
+            return rvalue
+
+        ROW_SEPARATOR_LINE="+------------------------------------+-----------------------------------+"
+        COL_SEPARATOR_CHAR="|"
+        COL_START_INDEX = 0
+        COL_VALUE_START_OFFSET = 1
+
+        t = _in.split( ROW_SEPARATOR_LINE);
+
+        ROW_MIN_TOKENS = 2
+
+        flag_value_started = False
+        for x in t:
+            temp = x.split(COL_SEPARATOR_CHAR)
+
+            if( ROW_MIN_TOKENS > len(temp)):
+                continue
+
+            # Trim out new line characters
+            col_values = []
+            for word in temp:
+                if( word != '\n'):
+                    col_values.append(word)
+
+            # Column Headers: Skip: Start with lowercase letter
+            col_start_char = col_values[COL_START_INDEX][COL_VALUE_START_OFFSET]
+            if( (flag_value_started == False) and (col_start_char.islower()) ):
+                continue
+
+            flag_value_started = True
+
+            like_temp = str()
+            current_col = str()
+            dislike_temp = str()
+            for index in xrange(0, len(col_values)):
+
+                if( (index%2) ==0 ):
+                    current_col = col_values[index].strip()
+                    if(len(current_col)):
+                        if(len(like_temp)):
+                            like_temp = like_temp + " " + current_col
+                        else:
+                            like_temp = col_values[index].strip()
+                else:
+                    current_col = col_values[index].strip()
+                    if(len(current_col)):
+                        if(len(dislike_temp)):
+                            dislike_temp = dislike_temp + " " + current_col
+                        else:
+                            dislike_temp = col_values[index].strip()
+
+            rvalue.append( (  unicode(like_temp), unicode(dislike_temp)))
+
+        return rvalue
+
+###############################
+# Function: is_palindrome
+###############################
+def is_palindrome(_in):
+
+    if( not isinstance( _in, str)):
+        return False
+
+    # Normalize input
+    temp = str()
+    for x in _in:
+        if( x.isalnum()):
+            temp = temp + x.lower();
+
+    count = len(temp)
+    last_index = count-1
+    for i in xrange(count/2):
+        if( temp[i] != temp[last_index-i]):
+            return False
+
+    return True
 
 ###############################
 # Function: devtest
 ###############################
 def devtest():
-    pass
+
+    i="Test"
+    is_palindrome(i)
 
 ###############################
 # Function: main 
