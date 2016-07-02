@@ -130,12 +130,33 @@ class Solutions():
     ###############################
     # Function: test_month_last_day
     ###############################
-    def test_month_last_day( self, _in):
-        rvalue = datetime()
+    def month_last_day( self, _in):
+        rvalue = 0
 
         # Element must be an datetime
-        if( not isinstance( _in, datetime())):
+        if( not isinstance( _in, datetime)):
             return rvalue
+
+        LEAP_YEAR_CYCLE=4
+        MONTH_OFFSET_SPLIT = 8
+
+
+        month = _in.month
+        if(month >= MONTH_OFFSET_SPLIT):
+            if( month%2 == 0):
+                rvalue=31
+            else:
+                rvalue=30
+        elif( month != 2):
+            if( month%2 == 0):
+                rvalue=30
+            else:
+                rvalue=31
+        else:
+            if( (_in.year%LEAP_YEAR_CYCLE) == 0):
+                rvalue = 29
+            else:
+                rvalue = 28
 
         return rvalue
 
@@ -161,14 +182,14 @@ class Solutions():
         COL_START_INDEX = 0
         COL_VALUE_START_OFFSET = 1
 
-        t = _in.split( ROW_SEPARATOR_LINE);
+        t = _in.split( ROW_SEPARATOR_LINE)
 
         ROW_MIN_TOKENS = 2
 
-        flag_value_started = False
         for x in t:
             temp = x.split(COL_SEPARATOR_CHAR)
 
+            # Skip: Empty values
             if( ROW_MIN_TOKENS > len(temp)):
                 continue
 
@@ -180,10 +201,8 @@ class Solutions():
 
             # Column Headers: Skip: Start with lowercase letter
             col_start_char = col_values[COL_START_INDEX][COL_VALUE_START_OFFSET]
-            if( (flag_value_started == False) and (col_start_char.islower()) ):
+            if( (col_start_char.islower()) ):
                 continue
-
-            flag_value_started = True
 
             like_temp = str()
             current_col = str()
