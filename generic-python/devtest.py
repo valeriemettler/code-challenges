@@ -149,7 +149,7 @@ class Solutions(object):
         rval_end = None
 
         # Element must be an datetime
-        if not isinstance(_in, datetime()):
+        if not isinstance(_in, datetime):
             return None
 
         return (rval_start, rval_end)
@@ -201,7 +201,29 @@ class Solutions(object):
         :return: returns a palindrome test function that take test string as input
         """
 
-        return is_palindrome
+        return self.is_palindrome
+
+    def is_palindrome(self, _in):
+
+        """is_palindrome: If input is a string and if it's palindrome return True,
+                          False otherwise"""
+
+        if not isinstance(_in, str):
+            return False
+
+        # Normalize input
+        temp = str()
+        for char in _in:
+            if char.isalpha():
+                temp = temp + char.lower()
+
+        count = len(temp)
+        last_index = count-1
+        for index in xrange(count/2):
+            if temp[index] != temp[last_index-index]:
+                return False
+
+        return True
 
     ###############################
     # Function: string_parse
@@ -269,31 +291,6 @@ class Solutions(object):
             rvalue.append((unicode(like_temp), unicode(dislike_temp)))
 
         return rvalue
-
-###############################
-# Function: is_palindrome
-###############################
-def is_palindrome(_in):
-
-    """is_palindrome: If input is a string and if it's palindrom return True,
-                      False otherwise"""
-
-    if not isinstance(_in, str):
-        return False
-
-    # Normalize input
-    temp = str()
-    for char in _in:
-        if char.isalpha():
-            temp = temp + char.lower()
-
-    count = len(temp)
-    last_index = count-1
-    for index in xrange(count/2):
-        if temp[index] != temp[last_index-index]:
-            return False
-
-    return True
 
 ###############################
 # Function: devtest
