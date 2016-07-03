@@ -15,6 +15,7 @@
 
 import sys
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 ###############################
 # Constants
@@ -151,6 +152,22 @@ class Solutions(object):
         # Element must be an datetime
         if not isinstance(_in, datetime):
             return None
+
+        # Week start
+        WEEKDAY_MONDAY_VALUE = 0
+        temp = _in
+        temp = temp.replace(temp.year, temp.month, temp.day, 0, 0, 0, 0)
+        while WEEKDAY_MONDAY_VALUE != temp.weekday():
+            temp = temp - relativedelta(days=1)
+        rval_start = temp
+
+        # Week end
+        WEEKDAY_SUNDAY_VALUE = 6
+        temp = _in
+        temp = temp.replace(temp.year, temp.month, temp.day, 23, 59, 59, 999999)
+        while WEEKDAY_SUNDAY_VALUE != temp.weekday():
+            temp = temp + relativedelta(days=1)
+        rval_end = temp
 
         return (rval_start, rval_end)
 
